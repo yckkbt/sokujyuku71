@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 71 - People Who Have Larger Brains and Eyes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Lato:wght@400;700;900&display=swap');
+  :root{--blue:#1a4fa0;--orange:#e8630a;--green:#1a7a3c;--light-blue:#e8f0fb;--border:#e0e4ea;--bg:#f0f2f5}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:#222}
+  .header{background:var(--blue);color:white;padding:20px 24px 16px}
+  .header-top{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+  .unit-badge{background:var(--orange);color:white;font-family:'Lato',sans-serif;font-weight:900;font-size:13px;padding:3px 10px;border-radius:20px}
+  .header h1{font-size:17px;font-weight:900}
+  .header-sub{font-size:13px;opacity:.75;margin-top:2px}
+  .header-bar{height:4px;background:var(--orange)}
+  .steps-nav{background:white;border-bottom:1px solid var(--border);display:flex;overflow-x:auto}
+  .step-btn{flex:1;min-width:80px;padding:12px 8px;border:none;background:none;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;color:#888;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+  .step-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+  .step-btn:hover{background:var(--light-blue)}
+  .step-content{display:none;max-width:720px;margin:0 auto;padding:24px 20px 60px}
+  .step-content.active{display:block}
+  .listen-card{background:white;border-radius:12px;border:1px solid var(--border);padding:28px 24px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  .listen-icon{font-size:48px;margin-bottom:12px}
+  .listen-title{font-size:18px;font-weight:900;margin-bottom:6px}
+  .listen-sub{font-size:13px;color:#888;margin-bottom:20px}
+  audio{width:100%;margin-top:8px}
+  .para-card{background:white;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  .para-num{display:inline-block;background:var(--blue);color:white;font-family:'Lato',sans-serif;font-weight:900;font-size:12px;padding:2px 10px;border-radius:20px;margin-bottom:12px}
+  .para-en{font-family:'Lato',sans-serif;font-size:15px;line-height:1.9;margin-bottom:16px;color:#111}
+  .para-en em{font-style:normal;background:#fff3cd;padding:0 2px;border-radius:3px}
+  .para-ja{font-size:13px;line-height:1.9;color:#555;border-top:1px solid var(--border);padding-top:14px}
+  .box{border-radius:8px;padding:14px 16px;margin-top:14px;font-size:13px;line-height:1.8}
+  .vocab-box{background:#f0f7ff;border-left:4px solid var(--blue)}
+  .idiom-box{background:#fff5ee;border-left:4px solid var(--orange)}
+  .grammar-box{background:#f0fff4;border-left:4px solid var(--green)}
+  .box-title{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;opacity:.7}
+  .check-q{background:#fafafa;border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-top:14px;font-size:13px}
+  .check-q-label{font-weight:700;color:var(--blue);font-size:12px;margin-bottom:6px}
+  .quiz-card{background:white;border-radius:12px;border:1px solid var(--border);padding:22px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  .quiz-q{font-size:15px;font-weight:700;margin-bottom:16px;line-height:1.6}
+  .quiz-opts{display:flex;flex-direction:column;gap:10px}
+  .quiz-opt{padding:12px 16px;border:2px solid var(--border);border-radius:8px;cursor:pointer;font-size:14px;transition:all .15s;text-align:left;background:white;font-family:'Noto Sans JP',sans-serif}
+  .quiz-opt:hover{border-color:var(--blue);background:var(--light-blue)}
+  .quiz-opt.correct{border-color:var(--green);background:#f0fff4;color:var(--green)}
+  .quiz-opt.wrong{border-color:#e53e3e;background:#fff5f5;color:#c53030}
+  .quiz-fb{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none;line-height:1.7}
+  .quiz-fb.show{display:block}
+  .quiz-fb.ok{background:#f0fff4;color:var(--green)}
+  .quiz-fb.ng{background:#fff5f5;color:#c53030}
+  .quiz-score{text-align:center;padding:24px;background:white;border-radius:12px;border:1px solid var(--border);margin-top:20px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  .score-num{font-size:48px;font-weight:900;color:var(--blue);font-family:'Lato',sans-serif}
+  .retry-btn{margin-top:16px;padding:12px 32px;background:var(--blue);color:white;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
+  .fc-wrap{max-width:400px;margin:0 auto}
+  .fc-card{background:white;border-radius:16px;border:1px solid var(--border);min-height:200px;display:flex;align-items:center;justify-content:center;text-align:center;padding:32px 24px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:transform .1s;user-select:none;margin-bottom:16px}
+  .fc-card:active{transform:scale(.97)}
+  .fc-front{font-family:'Lato',sans-serif;font-size:22px;font-weight:700;color:var(--blue)}
+  .fc-back{display:none}
+  .fc-back-en{font-family:'Lato',sans-serif;font-size:18px;font-weight:700;color:var(--blue);margin-bottom:8px}
+  .fc-back-ja{font-size:15px;color:#555;margin-bottom:12px}
+  .fc-back-ex{font-size:13px;color:#777;font-style:italic;line-height:1.7}
+  .fc-hint{font-size:12px;color:#aaa;margin-bottom:16px;text-align:center}
+  .fc-btns{display:flex;gap:12px;justify-content:center;margin-bottom:24px}
+  .fc-btn{padding:10px 24px;border:2px solid var(--border);border-radius:8px;cursor:pointer;font-size:14px;font-weight:700;font-family:'Noto Sans JP',sans-serif;background:white;transition:all .15s}
+  .fc-btn.know{border-color:var(--green);color:var(--green)}
+  .fc-btn.know:hover{background:var(--green);color:white}
+  .fc-btn.review{border-color:var(--orange);color:var(--orange)}
+  .fc-btn.review:hover{background:var(--orange);color:white}
+  .fc-progress{font-size:13px;color:#888;text-align:center;margin-bottom:16px}
+  .fc-done{text-align:center;padding:32px 24px;background:white;border-radius:12px;border:1px solid var(--border)}
+  .step-header{font-size:16px;font-weight:900;color:var(--blue);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--light-blue)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <span class="unit-badge">Unit 71</span>
+    <h1>People Who Have Larger Brains and Eyes</h1>
+  </div>
+  <div class="header-sub">目と脳の大きさを決める意外な要因</div>
+</div>
+<div class="header-bar"></div>
+
+<nav class="steps-nav">
+  <button class="step-btn active" onclick="showStep(1)">🎧 Step 1 Listen</button>
+  <button class="step-btn" onclick="showStep(2)">📖 Step 2 Read</button>
+  <button class="step-btn" onclick="showStep(3)">✏️ Step 3 Quiz</button>
+  <button class="step-btn" onclick="showStep(4)">🃏 Step 4 Flashcards</button>
+</nav>
+
+<!-- STEP 1 -->
+<div class="step-content active" id="step1">
+  <div class="listen-card">
+    <div class="listen-icon">🎧</div>
+    <div class="listen-title">Unit 71 — People Who Have Larger Brains and Eyes</div>
+    <div class="listen-sub">音声を聞いてから、英文を読もう</div>
+    <audio controls src="sokujukure211_eibun71.mp3"></audio>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step-content" id="step2">
+  <div class="step-header">📖 英文を読む</div>
+
+  <!-- Para 1 -->
+  <div class="para-card">
+    <span class="para-num">Para 1</span>
+    <div class="para-en">
+      When a team of researchers from the University of Oxford examined 55 skulls dating back to the 1800s, they concluded that people who live at higher latitudes are in general more likely to have bigger eyes and brains. The skulls were from as many as 12 different populations, from Micronesia near the equator to Scandinavia near the Arctic region.
+    </div>
+    <div class="para-ja">
+      オックスフォード大学の研究チームが1800年代にさかのぼる55個の頭蓋骨を調査した際、研究チームは、高緯度に住む人ほど、一般的に、目と脳が大きくなる傾向にあると結論づけた。頭蓋骨は12もの異なる人口集団から集められたもので、その地域は赤道付近のミクロネシアから北極付近のスカンジナビアまでさまざまだった。
+    </div>
+    <div class="box vocab-box">
+      <div class="box-title">📘 Vocabulary</div>
+      <strong>skull</strong>（頭蓋骨）／ <strong>latitude</strong>（緯度）／ <strong>equator</strong>（赤道）／ <strong>population</strong>（人口集団）／ <strong>Arctic region</strong>（北極地方）
+    </div>
+    <div class="check-q">
+      <div class="check-q-label">🔍 CHECK</div>
+      研究チームはどのような結論を出したか？<br>
+      →高緯度に住む人ほど、一般的に目と脳が大きくなる傾向にあると結論づけた。
+    </div>
+  </div>
+
+  <!-- Para 2 -->
+  <div class="para-card">
+    <span class="para-num">Para 2</span>
+    <div class="para-en">
+      <em>At the moment</em>, scientists cannot establish a firm link between larger eyes and larger brains <em>as yet</em>. However, when they <em>ran over</em> their findings, they <em>were convinced that</em> the reason these people had larger brains was not because they were smarter. They simply required more brain space to process more visual information taken in by the eyes. <em>What</em> limited sunlight <em>is</em> not <em>equal to</em> that received by those around the equator. Those living near the Arctic region <em>were forced to</em> cope with short days during the long winters, and their bodies have adapted to the environment. The frequently cloudy skies <em>added to</em> the lack of light they see.
+    </div>
+    <div class="para-ja">
+      現時点で科学者たちは、より大きな目と大きな脳の間に確たる関連性があることをまだ証明できていない。しかし、調査結果を検討したところ、この人たちがより大きな脳を持つ理由は、彼らがより賢いからというわけではないと確信した。彼らは単に、目から取り込まれる視覚情報をより多く処理するために、脳によりも多くの領域を必要としたのである。北極圏付近の地域で得られるわずかばかりのすべての日光の量と、赤道周辺の地域で得られる日光の量は同じではない。北極地に暮らす人は長い冬の間、日照時間の短さに対処することを強いられ、彼らの体は適応してきた。曇りがちな天候も、彼らが目にする日光の不足を増した。
+    </div>
+    <div class="box vocab-box">
+      <div class="box-title">📘 Vocabulary</div>
+      <strong>firm</strong>（しっかりした、確固たる）／ <strong>visual</strong>（視覚の）／ <strong>process</strong>（処理する）／ <strong>adapt</strong>（適応する）／ <strong>frequently</strong>（頻繁に）
+    </div>
+    <div class="box idiom-box">
+      <div class="box-title">🔑 Idiom / Phrase</div>
+      <strong>at the moment</strong>：現在、今のところ<br>
+      例）He's in a stable condition at the moment.（今のところ、彼の容体は安定している。）<br><br>
+      <strong>as yet</strong>：今のところ、現時点では（否定文で使う）<br>
+      例）There is as yet no vaccine against this disease.（この病気のワクチンは現時点では存在しない。）<br><br>
+      <strong>run over ~</strong>：〜を検討する、見直す<br>
+      例）I was almost run over by that truck.（もう少しであのトラックにひかれるところだった。）<br><br>
+      <strong>be convinced that ...</strong>：…であると確信している<br>
+      例）I'm convinced of the importance of higher education.（私は高等教育が重要だという確信を持っている。）<br><br>
+      <strong>be equal to ~</strong>：〜に等しい<br>
+      例）He is equal to doing that hard job.（彼はその難しい仕事をこなすことができる。）<br><br>
+      <strong>be forced to do</strong>：〜することを強いられる<br>
+      例）They were forced to leave their country due to the war.（戦争によって彼らは祖国を離れなければならなかった。）<br><br>
+      <strong>add to ~</strong>：〜を増やす<br>
+      例）Having a fun time with my dog adds to my happiness.（犬と楽しく過ごすといつも私の幸福感は増します。）
+    </div>
+    <div class="box grammar-box">
+      <div class="box-title">📗 Grammar</div>
+      <strong>What + 名詞 ...</strong>：…するすべての〜（関係代名詞的用法）<br>
+      例）I'll lend you what books I have.（あるだけの本をあなたに貸しましょう。）
+    </div>
+    <div class="check-q">
+      <div class="check-q-label">🔍 CHECK</div>
+      高緯度の人が大きな脳を持つ理由として研究者が確信したことは何か？<br>
+      →彼らが賢いからではなく、目から取り込む視覚情報をより多く処理するために脳の領域を多く必要としたから。
+    </div>
+  </div>
+
+  <!-- Para 3 -->
+  <div class="para-card">
+    <span class="para-num">Para 3</span>
+    <div class="para-en">
+      Evolution sounds like a very long process, but <em>it turns out that</em> the evolutionary processes causing the brain to become larger took place not so long ago. Research that <em>kept track of</em> where humans made their homes <em>found out</em> that humans have only lived at high latitudes in Asia and Europe in the last few tens of thousands of years.
+    </div>
+    <div class="para-ja">
+      進化と聞くと大層長いプロセスのように思えるが、脳を大きくするに至った進化の過程が起こったのは、さほど遠くない過去のことだとわかっている。人間がどこに居住地を構えていたかをたどる研究では、人間がアジアとヨーロッパの高緯度地域に住むようになったのは、この数万年のことでしかないことが明らかになった。
+    </div>
+    <div class="box idiom-box">
+      <div class="box-title">🔑 Idiom / Phrase</div>
+      <strong>it turns out that ...</strong>：…だということが判明する、わかる<br>
+      例）It turns out that hot dogs are healthy.（ホットドッグは健康的だということが判明した。）<br><br>
+      <strong>keep track of ~</strong>：〜の動向・経緯を追う、〜の記録をつける<br>
+      例）This device will help with keeping track of your fitness.（このデバイスはあなたの健康状態を管理するのに役立ちますよ。）<br><br>
+      <strong>find out ~</strong>：〜についてわかる、〜に関して真相を知る<br>
+      例）I happened to find out about her past.（たまたま彼女の過去について知ってしまった。）
+    </div>
+    <div class="check-q">
+      <div class="check-q-label">🔍 CHECK</div>
+      人間がアジア・ヨーロッパの高緯度地域に住み始めたのはいつ頃か？<br>
+      →この数万年（the last few tens of thousands of years）のことに過ぎない。
+    </div>
+  </div>
+
+  <!-- Para 4 -->
+  <div class="para-card">
+    <span class="para-num">Para 4</span>
+    <div class="para-en">
+      If you happen to know someone who was born and raised in a country near the North Pole, <em>call</em> the friend <em>up</em> to meet, and secretly examine if their eyes are larger than those of a Japanese person.
+    </div>
+    <div class="para-ja">
+      もしあなたの知り合いに北極に近い国で生まれ育った人がいるなら、その友人に電話して会う約束をし、その目が日本人の目より大きいかどうかこっそり確かめてみるとよいだろう。
+    </div>
+    <div class="box idiom-box">
+      <div class="box-title">🔑 Idiom / Phrase</div>
+      <strong>call up ~</strong>：〜に電話をかける<br>
+      例）Let's call her up and ask where she is.（彼女に電話して、今どこにいるのか聞こうよ。）
+    </div>
+    <div class="check-q">
+      <div class="check-q-label">🔍 CHECK</div>
+      筆者がPara 4で読者に勧めていることは何か？<br>
+      →北極に近い国出身の知人に電話して会い、その目が日本人より大きいかこっそり確かめること。
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step-content" id="step3">
+  <div class="step-header">✏️ 理解度チェッククイズ</div>
+
+  <div class="quiz-card">
+    <div class="quiz-q">Q1. What did the Oxford researchers conclude from examining 55 skulls?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'wrong',1)">A. People near the equator have larger eyes and brains</button>
+      <button class="quiz-opt" onclick="answer(this,'correct',1)">B. People living at higher latitudes tend to have bigger eyes and brains</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong',1)">C. Smarter people have larger brains</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong',1)">D. The size of eyes and brains is not related to where people live</button>
+    </div>
+    <div class="quiz-fb" id="fb1">✅ 正解！高緯度に住む人ほど、目と脳が大きくなる傾向があると結論づけました（Para 1）。</div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="quiz-q">Q2. Why did people living near the Arctic region develop larger brains, according to the researchers?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'wrong',2)">A. Because they needed to survive extreme cold</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong',2)">B. Because they were more intelligent than people near the equator</button>
+      <button class="quiz-opt" onclick="answer(this,'correct',2)">C. Because they needed more brain space to process visual information in low light</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong',2)">D. Because they ate more nutritious food</button>
+    </div>
+    <div class="quiz-fb" id="fb2">✅ 正解！光の少ない環境で視覚情報を処理するために、より多くの脳の領域が必要だったからです（Para 2）。</div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="quiz-q">Q3. What does "as yet" mean as used in Para 2?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'wrong',3)">A. As a result</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong',3)">B. As expected</button>
+      <button class="quiz-opt" onclick="answer(this,'correct',3)">C. Up to the present time (used in negative sentences)</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong',3)">D. As of yesterday</button>
+    </div>
+    <div class="quiz-fb" id="fb3">✅ 正解！"as yet"は「今のところ（まだ）」という意味で、否定文と共に使われます。</div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="quiz-q">Q4. According to Para 3, how long have humans lived at high latitudes in Asia and Europe?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'wrong',4)">A. Millions of years</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong',4)">B. Hundreds of thousands of years</button>
+      <button class="quiz-opt" onclick="answer(this,'correct',4)">C. A few tens of thousands of years</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong',4)">D. A few thousand years</button>
+    </div>
+    <div class="quiz-fb" id="fb4">✅ 正解！人間がアジアとヨーロッパの高緯度地域に住み始めたのは、この数万年（a few tens of thousands of years）のことに過ぎません（Para 3）。</div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="quiz-q">Q5. What does "it turns out that ..." mean?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'wrong',5)">A. It seems that ...</button>
+      <button class="quiz-opt" onclick="answer(this,'correct',5)">B. It is discovered or revealed that ...</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong',5)">C. It is decided that ...</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong',5)">D. It is hoped that ...</button>
+    </div>
+    <div class="quiz-fb" id="fb5">✅ 正解！"it turns out that ..."は「…だということが判明する・わかる」という意味です。</div>
+  </div>
+
+  <div class="quiz-score" id="quiz-score" style="display:none">
+    <div class="score-num" id="score-num">0/5</div>
+    <div style="margin-top:8px;font-size:15px;color:#555">お疲れ様でした！</div>
+    <button class="retry-btn" onclick="retryQuiz()">もう一度挑戦する</button>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step-content" id="step4">
+  <div class="step-header">🃏 イディオム・フレーズ フラッシュカード</div>
+  <div class="fc-wrap">
+    <div class="fc-progress" id="fc-progress">1 / 10</div>
+    <div class="fc-hint">タップしてうら面を見る</div>
+    <div class="fc-card" id="fc-card" onclick="flipCard()">
+      <div class="fc-front" id="fc-front"></div>
+      <div class="fc-back" id="fc-back"></div>
+    </div>
+    <div class="fc-btns">
+      <button class="fc-btn review" onclick="markCard(false)">🔁 もう一度</button>
+      <button class="fc-btn know" onclick="markCard(true)">✅ 覚えた！</button>
+    </div>
+    <div class="fc-done" id="fc-done" style="display:none">
+      <div style="font-size:32px;margin-bottom:12px">🎉</div>
+      <div style="font-size:18px;font-weight:900;margin-bottom:8px">全カード完了！</div>
+      <div style="font-size:14px;color:#555;margin-bottom:20px">よく頑張りました！</div>
+      <button class="retry-btn" onclick="shuffleCards()">もう一度やる</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function showStep(n){
+  document.querySelectorAll('.step-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.step-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  document.querySelectorAll('.step-btn')[n-1].classList.add('active');
+}
+
+let scores={},answered={};
+function answer(btn,type,qn){
+  if(answered[qn])return;
+  answered[qn]=true;
+  btn.closest('.quiz-opts').querySelectorAll('.quiz-opt').forEach(o=>o.style.pointerEvents='none');
+  btn.classList.add(type);
+  const fb=document.getElementById('fb'+qn);
+  if(type==='correct'){scores[qn]=1;fb.classList.add('ok','show');}
+  else{scores[qn]=0;fb.textContent='❌ 不正解。本文をもう一度確認しよう！';fb.classList.add('ng','show');}
+  if(Object.keys(answered).length===5)showScore();
+}
+function showScore(){
+  const total=Object.values(scores).reduce((a,b)=>a+b,0);
+  document.getElementById('score-num').textContent=total+'/5';
+  document.getElementById('quiz-score').style.display='block';
+}
+function retryQuiz(){
+  scores={};answered={};
+  document.querySelectorAll('.quiz-opt').forEach(o=>{o.classList.remove('correct','wrong');o.style.pointerEvents='';});
+  document.querySelectorAll('.quiz-fb').forEach(f=>f.classList.remove('show','ok','ng'));
+  document.getElementById('fb1').textContent='✅ 正解！高緯度に住む人ほど、目と脳が大きくなる傾向があると結論づけました（Para 1）。';
+  document.getElementById('fb2').textContent='✅ 正解！光の少ない環境で視覚情報を処理するために、より多くの脳の領域が必要だったからです（Para 2）。';
+  document.getElementById('fb3').textContent='✅ 正解！"as yet"は「今のところ（まだ）」という意味で、否定文と共に使われます。';
+  document.getElementById('fb4').textContent='✅ 正解！人間がアジアとヨーロッパの高緯度地域に住み始めたのは、この数万年（a few tens of thousands of years）のことに過ぎません（Para 3）。';
+  document.getElementById('fb5').textContent='✅ 正解！"it turns out that ..."は「…だということが判明する・わかる」という意味です。';
+  document.getElementById('quiz-score').style.display='none';
+}
+
+const cards=[
+  {front:'at the moment',ja:'現在、今のところ',ex:"He's in a stable condition at the moment.\n（今のところ、彼の容体は安定している。）"},
+  {front:'as yet',ja:'今のところ、現時点では（否定文で）',ex:'There is as yet no vaccine against this disease.\n（この病気のワクチンは現時点では存在しない。）'},
+  {front:'run over ~',ja:'〜を検討する、見直す',ex:'I was almost run over by that truck.\n（もう少しであのトラックにひかれるところだった。）'},
+  {front:'be convinced that ...',ja:'…であると確信している',ex:"I'm convinced of the importance of higher education.\n（私は高等教育が重要だという確信を持っている。）"},
+  {front:'be equal to ~',ja:'〜に等しい；〜をこなすことができる',ex:'He is equal to doing that hard job.\n（彼はその難しい仕事をこなすことができる。）'},
+  {front:'be forced to do',ja:'〜することを強いられる',ex:'They were forced to leave their country due to the war.\n（戦争によって彼らは祖国を離れなければならなかった。）'},
+  {front:'add to ~',ja:'〜を増やす',ex:'Having a fun time with my dog adds to my happiness.\n（犬と楽しく過ごすといつも私の幸福感は増します。）'},
+  {front:'it turns out that ...',ja:'…だということが判明する',ex:'It turns out that hot dogs are healthy.\n（ホットドッグは健康的だということが判明した。）'},
+  {front:'keep track of ~',ja:'〜の動向・経緯を追う；〜の記録をつける',ex:'This device will help with keeping track of your fitness.\n（このデバイスはあなたの健康状態を管理するのに役立ちますよ。）'},
+  {front:'call up ~',ja:'〜に電話をかける',ex:"Let's call her up and ask where she is.\n（彼女に電話して、今どこにいるのか聞こうよ。）"},
+];
+
+let deck=[...cards],ci=0,flipped=false;
+
+function shuffleCards(){
+  deck=[...cards].sort(()=>Math.random()-.5);
+  ci=0;flipped=false;
+  document.getElementById('fc-done').style.display='none';
+  document.getElementById('fc-card').style.display='flex';
+  document.querySelector('.fc-btns').style.display='flex';
+  document.querySelector('.fc-hint').style.display='block';
+  renderCard();
+}
+function renderCard(){
+  if(ci>=deck.length){
+    document.getElementById('fc-card').style.display='none';
+    document.querySelector('.fc-btns').style.display='none';
+    document.querySelector('.fc-hint').style.display='none';
+    document.getElementById('fc-done').style.display='block';
+    return;
+  }
+  const c=deck[ci];flipped=false;
+  document.getElementById('fc-front').textContent=c.front;
+  document.getElementById('fc-front').style.display='block';
+  document.getElementById('fc-back').innerHTML=`<div class="fc-back-en">${c.front}</div><div class="fc-back-ja">${c.ja}</div><div class="fc-back-ex">${c.ex.replace(/\n/g,'<br>')}</div>`;
+  document.getElementById('fc-back').style.display='none';
+  document.getElementById('fc-progress').textContent=(ci+1)+' / '+deck.length;
+}
+function flipCard(){
+  flipped=!flipped;
+  document.getElementById('fc-front').style.display=flipped?'none':'block';
+  document.getElementById('fc-back').style.display=flipped?'block':'none';
+}
+function markCard(known){
+  if(!flipped)flipCard();
+  setTimeout(()=>{if(!known)deck.push(deck[ci]);ci++;renderCard();},300);
+}
+shuffleCards();
+</script>
+</body>
+</html>
